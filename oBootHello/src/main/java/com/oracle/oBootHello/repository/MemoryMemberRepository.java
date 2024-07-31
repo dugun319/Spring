@@ -5,8 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.oracle.oBootHello.dto.Member1;
+import org.springframework.stereotype.Repository;
 
+import com.oracle.oBootHello.dto.Member1;
+// @Repository means "MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();"
+
+@Repository
 public class MemoryMemberRepository implements MemberRepository {
 
 	private static Map<Long, Member1> store = new HashMap<Long, Member1>(); 

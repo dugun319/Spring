@@ -7,7 +7,7 @@ import com.oracle.oBootHello.service.MemberService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	MemberService memberService = new MemberService();
+	// 1. Traditional method
+	//MemberService memberService = new MemberService();
+	
+	// 2. DI (Dependency Injection) method => Constructor Injection
+	private final MemberService memberService;
+	
+	@Autowired
+	public MemberController(MemberService memberService) {
+		this.memberService = memberService;
+	}
 	
 	@GetMapping(value = "members/memberForm")
 	public String memberForm() {

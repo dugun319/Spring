@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="thhp://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		background-color: lightskyblue;
+	}
+
+	th {
+		border: 1px solid;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	td {
+		padding: 10px;
+		border: 1px solid;
+	}
+	
+	table {
+		border: 5px solid;
+		border-color: navy;
+		border-radius: 10px;		
+		background-color : aliceblue;
+	}
+	
+	td:hover {
+		background-color : paleturquoise;
+	}
+	
+	input{
+		width: 200px;
+		height: 30px;
+	}
+	
+	div {
+		text-align: center;
+	}
+
+	caption {
+		padding: 30px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+</style>
+</head>
+	<body>
+		<h1>회원조회</h1>
+		<div class="container">
+			<table>
+				<thead>
+					<tr>
+						<th>NO</th>
+						<th>NAME</th>						
+					</tr>				
+				</thead>
+				<tbody>
+					<tr th:each="member : ${members}">
+						<td th:text="${member.id}"></td>
+						<td th:text="${member.name}"></td>
+					</tr>
+				</tbody>			
+			</table>		
+		</div>
+	</body>
+</html>

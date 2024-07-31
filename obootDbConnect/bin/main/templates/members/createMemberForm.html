@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="thhp://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		background-color: lightskyblue;
+	}
+
+	th {
+		border: 1px solid;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	td {
+		padding: 10px;
+		border: 1px solid;
+	}
+	
+	table {
+		border: 5px solid;
+		border-color: navy;
+		border-radius: 10px;		
+		background-color : aliceblue;
+	}
+	
+	td:hover {
+		background-color : paleturquoise;
+	}
+	
+	input{
+		width: 200px;
+		height: 30px;
+	}
+	
+	div {
+		text-align: center;
+	}
+
+	caption {
+		padding: 30px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+</style>
+</head>
+	<body>
+		<h1>회원등록</h1>
+		<div class="container">
+			<form action="/members/newSave" method="post">
+				<div class="form-group">
+					<label for="name">NAME</label>
+					<input type="text" id="name" name="name" placeholder="Enter your name">				
+				</div>
+				<button type="submit">등록</button>	
+			</form>
+		
+		</div>
+	</body>
+</html>
