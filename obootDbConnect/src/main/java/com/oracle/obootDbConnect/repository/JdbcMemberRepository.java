@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.oracle.obootDbConnect.domain.Member7;
 
-@Repository
+//@Repository
 public class JdbcMemberRepository implements MemberRepository {
 	
 	private final DataSource dataSource;
