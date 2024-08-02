@@ -38,7 +38,7 @@
 					<td colspan="5">
 						<input type="submit" value="EDIT"> &nbsp;&nbsp;
 						<a href="list">SHOW LIST</a> &nbsp;&nbsp;
-						<a href="delete?bId=${mvc_board.bId }">DELET</a> &nbsp;&nbsp;
+						<a href="delete?bId=${mvc_board.bId }">DELETE</a> &nbsp;&nbsp;
 						<a href="reply_view?bId=${mvc_board.bId }">REPLY</a>
 					</td>
 				</tr>			

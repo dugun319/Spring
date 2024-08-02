@@ -38,6 +38,17 @@ public class BDto {
 		this.bIndent	= bIndent;
 		
 	}
+	
+	public BDto(int 		bId,	
+			String		bName,
+			String 		bTitle,
+			String		bContent) {
+	
+	this.bId 		= bId;
+	this.bName		= bName;
+	this.bTitle		= bTitle;
+	this.bContent	= bContent;	
+}
 
 	public int getbId() {
 		return bId;

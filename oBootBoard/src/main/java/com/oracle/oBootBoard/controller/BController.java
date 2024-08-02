@@ -27,9 +27,9 @@ public class BController {
 		this.bExecuteCommand = bExecuteCommand;
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("list")
 	public String list(Model model) {
-		logger.info("BController list(Model model) is started");
+		logger.info("BController list() is started");
 		
 		bExecuteCommand.bListCommand(model);
 		
@@ -39,37 +39,75 @@ public class BController {
 	}
 	
 	
-	@GetMapping("/content_view")
+	@GetMapping("content_view")
 	public String content_view(HttpServletRequest request, Model model) {
 		
-		System.out.println("BController content_view is started");		
+		System.out.println("BController content_view() is started");		
 		model.addAttribute("request", request);		
 		bExecuteCommand.bContentCommand(model);
 		
 		return "content_view";
 	}
 	
-	@PostMapping("/modify")
+	@PostMapping("modify")
 	public String modify(HttpServletRequest request, Model model) {
-				
-		int bId			= Integer.parseInt(request.getParameter("bId"));
-		System.out.println("String modify bId " + bId);
-		String bName	= request.getParameter("bName");
-		System.out.println("String modify bName " + bName);
-		String bTitle	= request.getParameter("bTitle");
-		String bContent	= request.getParameter("bContent");
 		
-		BDto board		= new BDto();
+		logger.info("BController modify() is started");				
+		model.addAttribute("request", request);
+		bExecuteCommand.bModifyCommand(model);
 		
-		board.setbId(bId);
-		board.setbName(bName);
-		board.setbTitle(bTitle);
-		board.setbContent(bContent);
-		
-		bExecuteCommand.modify(board, model);
-		
+		//return "redirect:list";
 		return "modify";
 	}
 	
+	@GetMapping("delete")
+	public String delete(HttpServletRequest request, Model model) {
+		
+		logger.info("BController delete() is started");				
+		model.addAttribute("request", request);
+		bExecuteCommand.bDeleteCommand(model);
+		
+		//return "delete";
+		return "redirect:list";
+	}
+			
+	@GetMapping("write_view")
+	public String write_view(HttpServletRequest request, Model model) {
+		
+		logger.info("BController write_view() is started");
+		
+		return "write_view";
+	}
+	
+	@PostMapping("write")
+	public String write(HttpServletRequest request, Model model) {
+		
+		logger.info("BController write() is started");				
+		model.addAttribute("request", request);
+		bExecuteCommand.bWriteCommand(model);
+				
+		//return "write";
+		return "redirect:list";
+	}
+	
+	@GetMapping("reply_view")
+	public String reply_view(HttpServletRequest request, Model model) {
+		
+		logger.info("BController reply_view() is started");				
+		model.addAttribute("request", request);
+		bExecuteCommand.bReplyViewCommand(model);
+		
+		return "reply_view";
+	}
+	
+	@PostMapping("reply")
+	public String reply(HttpServletRequest request, Model model) {
+		
+		logger.info("BController reply() is started");				
+		model.addAttribute("request", request);
+		bExecuteCommand.bReplyCommand(model);
+				
+		return "redirect:list";
+	}
 
 }
