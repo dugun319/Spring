@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		background-color: lightskyblue;
+	}
+
+	th {
+		border: 1px solid;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	td {
+		padding: 10px;
+		border: 1px solid;
+	}
+	
+	table {
+		border: 5px solid;
+		border-color: navy;
+		border-radius: 10px;		
+		background-color : aliceblue;
+	}
+	
+	td:hover {
+		background-color : paleturquoise;
+	}
+	
+	input{
+		width: 200px;
+		height: 30px;
+	}
+	
+	div {
+		text-align: center;
+	}
+
+	caption {
+		padding: 30px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+</style>
+</head>
+	<body>
+		<h1>JPA Member Search</h1>
+		<div class="nav">
+			<form action="/members/search" method="post">
+				<h3>Member Name: <input type="text" name="name" placeholder="Enter name"></h3>
+				<button type="submit">SEARCH</button>
+			</form>
+		</div>
+		<div class="container">
+			<table>
+				<thead>
+					<tr>
+						<th>Number</th>
+						<th>NAME</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="member : ${members}">
+						<td th:text="${member.id}"></td>
+						<td th:text="${member.name}"></td>
+					</tr>
+				</tbody>				
+			</table>
+		</div>
+	</body>
+</html>

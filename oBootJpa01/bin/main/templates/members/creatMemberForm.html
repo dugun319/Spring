@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		background-color: lightskyblue;
+	}
+
+	th {
+		border: 1px solid;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	td {
+		padding: 10px;
+		border: 1px solid;
+	}
+	
+	table {
+		border: 5px solid;
+		border-color: navy;
+		border-radius: 10px;		
+		background-color : aliceblue;
+	}
+	
+	td:hover {
+		background-color : paleturquoise;
+	}
+	
+	input{
+		width: 200px;
+		height: 30px;
+	}
+	
+	div {
+		text-align: center;
+	}
+
+	caption {
+		padding: 30px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+</style>
+</head>
+	<body>
+		<h1>JPA Member Registration</h1>
+		<div>
+			<form action="/members/save" method="post">
+				<table>
+					<tr>
+						<th>ID: </th>
+						<td><input type="text" id="id"		name="id" 	required="required"></td>
+					</tr>
+					
+					<tr>
+						<th>NAME: </th>
+						<td><input type="text" id="name"	name="name" placeholder="Enter your NAME"></td>
+					</tr>
+					
+					<tr>
+						<td colspan="5"><button type="submit">Registration</button></td>
+					</tr>
+					
+				</table>
+			</form>
+		</div>
+	</body>
+</html>
