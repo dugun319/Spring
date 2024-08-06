@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		background-color: lightskyblue;
+	}
+
+	th {
+		border: 1px solid;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	td {
+		padding: 10px;
+		border: 1px solid;
+	}
+	
+	table {
+		border: 5px solid;
+		border-color: navy;
+		border-radius: 10px;		
+		background-color : aliceblue;
+	}
+	
+	td:hover {
+		background-color : paleturquoise;
+	}
+	
+	input{
+		width: 200px;
+		height: 30px;
+	}
+	
+	div {
+		text-align: center;
+	}
+
+	caption {
+		padding: 30px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+</style>
+</head>
+	<body>
+		<h1>JPA Member Modification</h1>
+		<div class="container">
+			<form action="/members/memberUpdate" method="post">
+			<input type="hidden" name="id" 		th:value= "${member.id}"/>
+			<input type="hidden" name="teamid" 	th:value= "${member.team.team_id}"/>
+				<table>	
+					<tr>
+						<th>NAME: </th>
+						<td><input type="text" name="name" 		th:value= "${member.name}"></td>
+					</tr>
+					
+					<tr>
+						<th>TEAM: </th>
+						<td><input type="text" name="teamname" 	th:value= "${member.team.name}"></td>
+					</tr>
+					
+					<tr>
+						<th>Salary: </th>
+						<td><input type="text" name="sal" 		th:value= "${member.sal}"></td>
+					</tr>
+					
+					<tr>
+						<td colspan="5"><button type="submit">Modification</button></td>
+					</tr>
+					
+				</table>			
+			</form>
+		</div>
+	</body>
+</html>

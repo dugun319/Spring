@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		background-color: lightskyblue;
+	}
+
+	th {
+		border: 1px solid;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	td {
+		padding: 10px;
+		border: 1px solid;
+	}
+	
+	table {
+		border: 5px solid;
+		border-color: navy;
+		border-radius: 10px;		
+		background-color : aliceblue;
+	}
+	
+	td:hover {
+		background-color : paleturquoise;
+	}
+	
+	input{
+		width: 200px;
+		height: 30px;
+	}
+	
+	div {
+		text-align: center;
+	}
+
+	caption {
+		padding: 30px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+</style>
+</head>
+	<body>
+		<h1>JPA Member List</h1>
+		<div class="container">
+			<table>
+				<thead>
+					<tr>
+						<th>Number</th>
+						<th>Name</th>
+						<th>TeamName</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="member : ${memberList}">
+						<td th:text="${member.id}"></td>
+						<td><a th:href="@{/memberModifyForm(id=${member.id})}" th:text="${member.name}"></a></td>
+						<td th:text="${member.team.name}"></td>
+					</tr>
+				</tbody>				
+			</table>
+		</div>
+	</body>
+</html>
