@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 	<body>
-		<form action="/modify" method="post">
+		<form action="modify" method="post">
 			<input type="hidden" name="bId" value="${mvc_board.bId }"/>
 			<table>
 				<tr>
