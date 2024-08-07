@@ -2,7 +2,7 @@ package com.oracle.oBootJpa02.repository;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.oBootJpa02.domain.Member;
@@ -14,7 +14,7 @@ import jakarta.persistence.EntityManager;
 public class JpaMemberRepository implements MemberRepository {
 	
 	private final EntityManager em;
-	@Autowired	
+	// @Autowired	
 	public JpaMemberRepository(EntityManager em) {
 		this.em = em;
 	}
@@ -47,14 +47,63 @@ public class JpaMemberRepository implements MemberRepository {
 	}
 
 	@Override
-	public void updateMember(Member member) {
-		/*
-		 * List<Member> memberList = em.createQuery("SELECT m FROM Member m",
-		 * Member.class)
-		 * 
-		 * .getResultList();
-		 */
+	public int updateByMember(Member member) {
+		int result = 0;
 		
+		System.out.println("JpaMemberRepository updateByMember member -> " + member);
+		Member member3 = em.find(Member.class, member.getId());
+		
+		if(member3 != null) {
+			System.out.println("JpaMemberRepository updateByMember member -> " + member.getTeamid());
+			Team team = em.find(Team.class, member.getTeamid());
+			if(team != null) {
+				team.setName(member.getTeamname());
+				em.persist(team);
+			}
+			
+			
+			member3.setTeam(team);
+			member3.setName(member.getName());
+			member3.setSal(member.getSal());
+			
+			em.persist(member3);
+			
+			result = 1;
+					
+		} else {
+			result = 0;
+			System.out.println("JpaMemberRepository updateByMember member is failed");
+		}
+		
+		return result; 
+		
+	}
+
+	@Override
+	public List<Member> findByName(String searchName) {
+		
+		String pname = searchName + "%" ;
+		System.out.println("JpaMemberRepository findByName() pname -> " + pname);
+		List<Member> memberList = em.createQuery("SELECT m FROM Member m WHERE name LIKE : pname", Member.class)
+									.setParameter("pname", pname)
+									.getResultList();		
+		System.out.println("JpaMemberRepository findByName() memberList.size() -> " + memberList.size());
+		
+		return memberList;
+	}
+
+	@Override
+	public List<Member> findByList(Long id, Long sal) {
+		List<Member> memberList = em.createQuery("SELECT m FROM Member m "
+												+ "WHERE id > :id "
+										   		+ "	AND sal > :sal", Member.class)
+									.setParameter("id", id)
+									.setParameter("sal", sal)
+									.getResultList();	
+		
+		System.out.println("JpaMemberRepository findByList() memberList.size() -> " + memberList.size());
+		
+		return memberList;
 	}
 
 }

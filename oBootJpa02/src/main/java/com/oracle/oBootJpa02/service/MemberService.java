@@ -2,7 +2,7 @@ package com.oracle.oBootJpa02.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +15,7 @@ public class MemberService {
 	
 	private final MemberRepository memberRepository;
 	
-	@Autowired
+	// @Autowired
 	public MemberService(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
@@ -44,11 +44,33 @@ public class MemberService {
 
 	public void memberUpdate(Member member) {
 		System.out.println("MemberService memberUpdate() member -> " + member);
-		memberRepository.updateMember(member);
+		memberRepository.updateByMember(member);
 		System.out.println("MemberService memberRepository.updateMember(member) is called");
 		
 		return;
 		
+	}
+
+	public List<Member> getListMember(String name) {
+		System.out.println("MemberService name -> " + name);
+		List<Member> memberList = memberRepository.findByName(name);
+		System.out.println("MemberService memberRepository.findByName(name) is called");
+		return memberList;
+	}
+
+	public List<Member> getListfindByMembers(Member member) {
+		
+		Long id = member.getId();
+		Long sal = member.getSal();
+		
+		System.out.println("MemberService member.getId() -> " + id);		
+		System.out.println("MemberService member.getSal() -> " + sal);
+		
+		
+		List<Member> memberList = memberRepository.findByList(id, sal);
+		System.out.println("MemberService memberRepository.findByList(id, sal) is called");
+		
+		return memberList;
 	}
 
 }

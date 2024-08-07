@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import com.oracle.oBootJpa02.domain.Member;
 import com.oracle.oBootJpa02.service.MemberService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+/*
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+*/
 
 
 @Controller
@@ -37,6 +39,7 @@ public class MemberController {
 	public String memberSave(Member member) {
 		
 		System.out.println("MemberController /memberSave memberSave() is started");
+		logger.info("member -> " + member);
 		System.out.println("member -> " + member);
 		System.out.println("member.getName() -> " + member.getName());
 		
@@ -48,9 +51,8 @@ public class MemberController {
 	@GetMapping(value = "/members")
 	public String listMember(Model model) {
 		List<Member> memberList = memberService.getListAllMember();
-		
 		System.out.println("MemberController /membes listMember() is started");
-		System.out.println("/membes listMember() memberList.get(0).getName() -> " + memberList.get(0).getName());
+		System.out.println("/members listMember() memberList.get(0).getName() -> " + memberList.get(0).getName());
 		
 		model.addAttribute("memberList", memberList);
 		
@@ -74,10 +76,30 @@ public class MemberController {
 		
 		System.out.println("MemberController /members/memberUpdate() member -> " + member);
 		memberService.memberUpdate(member);
-		System.out.println("MemberController memberService.memberUpdate(member) is called");
-		
+		logger.info("MemberController memberService.memberUpdate(member) is called");
 		return "redirect:/members";
 				
+	}
+	
+	@GetMapping(value = "/members/search")
+	private String serach(Member member, Model model) {
+		
+		List<Member> memberList = memberService.getListMember(member.getName());		
+		logger.info("MemberController memberService.getListMember(member.getName()) is called");
+		
+		model.addAttribute("memberList", memberList);		
+		
+		return "members/memberList";
+	}
+	
+	@GetMapping(value = "/findByListMembers")
+	private String findByListMembers(Member member, Model model) {
+		
+		List<Member> memberList = memberService.getListfindByMembers(member);		
+		logger.info("MemberController memberService.getListfindByMembers(member) is called");
+		
+		model.addAttribute("memberList", memberList);	
+		return "members/memberList";
 	}
 	
 	

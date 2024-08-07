@@ -11,10 +11,11 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Data;
+/*
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
+*/
 @Entity
 @Table(name = "member2")
 /*
@@ -50,5 +51,8 @@ public class Member {
 	
 	@Transient
 	private String 	teamname;
+	//memberModify.html 의 hidden naem = "teamid" 변수를 받음
+	@Transient
+	private String 	teamid;
 
 }
