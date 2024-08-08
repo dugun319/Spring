@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+
+	tr { height: 30px; 
+		background: aliceblue;		
+		}
+
+	body{
+		background-color: lightskyblue;
+		font-family: arial black;
+		text-align: center;
+	}
+
+	th {
+		border: 1px solid;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	td {
+		padding: 10px;
+		border: 1px solid;
+	}
+	
+	table {
+		border: 5px solid;
+		width: 100%;
+		border-color: navy;
+		border-radius: 10px;		
+		background-color: aliceblue;
+	}
+	
+	td:hover {
+		background-color : paleturquoise;
+	}
+	
+	input{
+		width: 200px;
+		height: 30px;
+	}
+	
+	div {
+		text-align: center;
+	}
+
+	caption {
+		padding: 30px;
+		font-size: 25px;
+		font-weight: bold;
+	}
