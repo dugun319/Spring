@@ -172,6 +172,24 @@ public class JpaRestApiController {
 
 	}
 	
+	@GetMapping(value = "/restApi/v2/members/{id}")
+	public ReturnMemberRequest membersVer2(@PathVariable("id") Long id) {
+		System.out.println("JpaRestApiController /restApi/v2/members/{id} id -> " + id);
+		Member findMember = memberService.findByMember(id);		
+		System.out.println("JpaRestApiController /restApi/v2/members/{id} findMember -> " + findMember);
+		
+		return new ReturnMemberRequest(findMember.getName(), findMember.getSal());
+	}
+	
+	
+	@Data
+	@AllArgsConstructor
+	static class ReturnMemberRequest {
+		private String 	name;
+		private Long	sal;
+	}
+	
+	
 	@Data
 	static class UpdateMemberRequest {
 		private String 	name;
