@@ -5,7 +5,8 @@ import java.util.List;
 import com.oracle.oBootJpaApi01.domain.Member;
 
 public interface MemberRepository {
-	Long             save(Member member);
-	List<Member>     findAll();
-
+	Long            save(Member member);
+	List<Member>    findAll();
+	Member 			findByMember(Long memberId);
+	int 			updateByMember(Member member);
 }

@@ -11,14 +11,14 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "team5")
+@Table(name = "team3")
 //  1. Sequence 
 //1) 객체 nm : team_seq_gen5
 //2) DB  nm : team_seq_generator5
 //3) 초기 -> 1 , 할당 ->1
 @SequenceGenerator( 
-		name = "team_seq_gen5",
-		sequenceName =  "team_seq_generator5", //매핑할 DB 시퀀스 이름
+		name = "team_seq_gen3",
+		sequenceName =  "team_seq_generator3", //매핑할 DB 시퀀스 이름
 		initialValue = 1,
 		allocationSize = 1
 		)
@@ -27,7 +27,7 @@ public class Team {
 	@Id
 	@GeneratedValue(
 			strategy = GenerationType.SEQUENCE,
-			generator = "team_seq_gen5"
+			generator = "team_seq_gen3"
      )
 
 	// PK --> team_seq_gen5  

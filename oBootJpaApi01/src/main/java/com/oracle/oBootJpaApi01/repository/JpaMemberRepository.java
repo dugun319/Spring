@@ -2,7 +2,6 @@ package com.oracle.oBootJpaApi01.repository;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.oBootJpaApi01.domain.Member;
@@ -33,6 +32,32 @@ public class JpaMemberRepository implements MemberRepository {
 					                .getResultList();
 		System.out.println("JpaMemberRepository  findAll memberList.size()->"+memberList.size());
 		return memberList;
+	}
+
+	@Override
+	public Member findByMember(Long memberId) {
+		Member findMember = em.find(Member.class, memberId);
+		return findMember;
+	}
+
+	@Override
+	public int updateByMember(Member member) {
+		
+		int result;
+		
+		Member member3 = em.find(Member.class, member.getId());
+		
+		if(member3 != null) {
+			member3.setName(member.getName());
+			member3.setSal(member.getSal());
+			result = 1;
+			
+			System.out.println("JpaMemberRepository updateByMember() is completed");
+		} else {
+			result = 0;
+			System.out.println("JpaMemberRepository updateByMember() is failed");
+		}		
+		return result;
 	}
 
 	

@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oracle.oBootJpaApi01.domain.Member;
 import com.oracle.oBootJpaApi01.service.MemberService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -41,11 +44,13 @@ public class JpaRestApiController {
 		  System.out.println("JpaRestApiController /restApi/v1/members  start..");
 		  List<Member> listMember = memberService.getListAllMember();
 		  System.out.println("JpaRestApiController /restApi/v1/members listMember.size()->"+listMember.size());
+
 		  return listMember;
 	}
 	
 	// Good API  Easy Version
 	// 목표 : 이름 & 급여 만 전송 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/restApi/v21/members")
 	public Result membersVer21() {
 		List<Member> findMembers = memberService.getListAllMember();
@@ -65,6 +70,7 @@ public class JpaRestApiController {
 
 	// Good API  람다  Version
 	// 목표 : 이름 & 급여 만 전송 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/restApi/v22/members")
 	public Result membersVer22() {
 		List<Member> findMembers = memberService.getListAllMember();
@@ -79,7 +85,6 @@ public class JpaRestApiController {
 		System.out.println("restApi/v22/members memberCollect.size()->"+memberCollect.size());
 		return new Result(memberCollect.size(), memberCollect);
 	}
-	 
 	
 	@Data
 	@AllArgsConstructor
@@ -95,5 +100,91 @@ public class JpaRestApiController {
 		private Long   sal;
 	}
 
+	// @RequestBody : Json(member)으로 온것을  --> Member member Setting
+	// @RequestBody without annotation, (null) is entered 
+	@PostMapping(value = "/restApi/v1/memberSave")
+	public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
+		System.out.println("JpaRestApiController CreateMemberResponse saveMemberV1() member.getName() -> " + member.getName());
+		log.info("member.getName() -> {} ", member.getName());
+		log.info("member.getId() -> {} ", member.getId());
+		
+		Long id = memberService.saveMember(member);
+		return new CreateMemberResponse(id);		
+	}
+	
+	@Data
+	static class CreateMemberRequest {
+		@NotEmpty
+		private String name;
+		private Long sal;	
+	}
+		
+	@Data
+	@RequiredArgsConstructor
+	class CreateMemberResponse {
+		private final Long id;		
+		
+		/*
+		public CreateMemberResponse(Long id) {
+			this.id = id;
+		}
+		*/		
+	}
+	
+	@PostMapping(value = "/restApi/v2/memberSave")
+	public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest cMember) {
+		System.out.println("JpaRestApiController CreateMemberResponse saveMemberV2() cMember.getName() -> " + cMember.getName());
+		log.info("cMember.getName() -> {} ", cMember.getName());
+		log.info("cMember.getSal() -> {} ", cMember.getSal());
+		
+		Member member = new Member();
+		member.setName(cMember.getName());
+		member.setSal(cMember.getSal());
+		
+		Long id = memberService.saveMember(member);
+		return new CreateMemberResponse(id);		
+	}
+	
+	/*
+	 *   단일 Id 조회 API
+	 *   URI 상에서 '{ }' 로 감싸여있는 부분과 동일한 변수명을 사용하는 방법
+	 *   해당 데이터가 있으면 업데이트를 하기에 
+	 *   PUT요청이 여러번 실행되어도 해당 데이터는 같은 상태이기에 멱등
+	 */
+	@GetMapping(value = "/restApi/v15/members/{id}")
+	public Member membersVer15(@PathVariable("id") Long id) {
+		System.out.println("JpaRestApiController /restApi/v15/members/{id} id -> " + id);
+		Member findMember = memberService.findByMember(id);
+		System.out.println("JpaRestApiController /restApi/v15/members/{id} findMember -> " + findMember);
+		
+		return findMember;
+	}
+	
+	@PutMapping(value = "/restApi/v21/members/{id}")
+	private UpdateMemberResponse updateMemberV21(@PathVariable("id") Long id,
+												 @RequestBody @Valid UpdateMemberRequest uMember) {
+		System.out.println("JpaRestApiController JpaRestApiController id -> " + id);
+		System.out.println("JpaRestApiController JpaRestApiController uMember -> " + uMember);
+		
+		memberService.updateMember(id, uMember.getName(), uMember.getSal());
+		Member findMember = memberService.findByMember(id);
+		return new UpdateMemberResponse(findMember.getId(), findMember.getName(), findMember.getSal());
+
+	}
+	
+	@Data
+	static class UpdateMemberRequest {
+		private String 	name;
+		private Long	sal;
+	}
+	
+	@Data
+	@AllArgsConstructor
+	class UpdateMemberResponse{
+		private Long 	id;
+		private String 	name;
+		private Long	sal;
+	}
+	
 	
 }
