@@ -26,7 +26,7 @@
 				<td>${num }</td>
 				<td>${emp.empno }</td>
 				<td>
-					<a href="detailEmp?empno=${emp.empno }">${emp.ename }</a>
+					<a href="/detailEmp?empno=${emp.empno }">${emp.ename }</a>
 				</td>				
 				<td>${emp.job }</td>
 				<td>${emp.sal }</td>			
@@ -36,15 +36,15 @@
 		</table>
 		
 		<c:if test="${page.startPage > page.pageBlock }">
-			<a href="listEmp?currentPage=${page.startPage - page.pageBlock }">[Previous]</a>
+			<a href="/listEmp?currentPage=${page.startPage - page.pageBlock }">[Previous]</a>
 		</c:if>
 		
 		<c:forEach var="i" begin="${page.startPage }" end="${page.endPage}">
-			<a href="listEmp?currentPage=${i }">[${i }]</a>
+			<a href="/listEmp?currentPage=${i }">[${i }]</a>
 		</c:forEach>
 		
 		<c:if test="${page.startPage < page.pageBlock }">
-			<a href="listEmp?currentPage=${page.startPage + page.pageBlock }">[Next]</a>
+			<a href="/listEmp?currentPage=${page.startPage + page.pageBlock }">[Next]</a>
 		</c:if>
 				
 	</body>

@@ -5,5 +5,38 @@
 <mapper namespace="com.oracle.oBootMyBatis01.EmpMapper">
 	<select id="EmpTotal" resultType="int">
 		SELECT COUNT(*) FROM emp	
-	</select>    	
+	</select> 
+	
+	<select id="EmpListAll" 	parameterType="Emp" 	resultType="Emp">
+		SELECT * 
+    		FROM (
+            		SELECT ROWNUM AS rn, empAll.* 
+            			FROM (SELECT * 
+                    			FROM emp 
+                    			ORDER BY empno DESC
+                    		 ) empAll
+    			  )
+    		WHERE rn 
+    			BETWEEN #{start} AND #{end} 	
+	</select>
+	
+	<select id="EmpSelOne"		parameterType="int" 	resultType="Emp">
+		SELECT * FROM emp WHERE empno = #{empno}	
+	</select>  
+	
+	<update id="EmpUpdate"		parameterType="Emp">
+		UPDATE emp
+			SET ename 	 = #{ename},
+				job	 	 = #{job},
+				mgr 	 = #{mgr},
+				hiredate = #{hiredate}, 
+				sal 	 = #{sal},
+				<if test = "#{comm} != null">
+					comm 	 = #{comm},
+				</if>
+				deptno 	 = #{deptno}
+			WHERE
+				empno 	 = #{empno}
+	</update>   	
+	   	
 </mapper> 

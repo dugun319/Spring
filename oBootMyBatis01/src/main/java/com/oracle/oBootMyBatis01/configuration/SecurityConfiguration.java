@@ -14,16 +14,30 @@ public class SecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 	
-	
+	/*
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.authorizeHttpRequests((authorizeRequests) -> authorizeRequests
 									.anyRequest()
-									.permitAll()
-								   );
+									.permitAll())
+			.cors(cors -> cors.disable())
+			.csrf(csrf -> csrf.disable());
 		
 		return httpSecurity.build(); 
 	}
+	*/
+    
+	@Bean
+	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http
+			.cors(cors -> cors.disable())
+			.csrf(csrf -> csrf.disable());
+				
+		return http.build(); 
+	}
+    
+    
+    
 	
 }
