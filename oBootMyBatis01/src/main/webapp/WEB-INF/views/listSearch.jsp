@@ -8,15 +8,7 @@
 <title>Insert title here</title>
 </head>
 	<body>
-		<h1>회원관리</h1>
-		
-		<h4><a href="/writeFormEmp1">WriteFomrEmp1 Input</a></h4>
-		<h4><a href="/writeFormEmp2">WriteFomrEmp2 Input(Validation)</a></h4>
-		
-		<h3>Total Number of Employee : ${totalEmp }</h3>
-		
-		<h5>updateCnt 수정시 전달 Message : ${updateCnt }</h5>
-		<h5>MessageTest 수정시 전달 Message : ${MessageTest }</h5>
+		<h1>Result Of Searching</h1>
 		
 		<form action="/listSearch">
 			<select name="search">
@@ -24,7 +16,8 @@
 				<option value="s_ename" >이름조회</option>
 			</select>
 			<input 	type="text" name="keyword" placeholder="Enter the keyword">
-			<button type="submit">KEYWORD SEARCH</button>		
+			<button type="submit">KEYWORD SEARCH</button> &nbsp; &nbsp; &nbsp;
+			<input type="button" value="LIST"	onclick="location.href='/listEmp'"/> &nbsp;		
 		</form>
 		
 		<c:set var="num" value="${page.total - page.start + 1 }"></c:set>
@@ -42,7 +35,7 @@
 				<td>${num }</td>
 				<td>${emp.empno }</td>
 				<td>
-					<a href="/detailEmp?empno=${emp.empno }&currentPage=${currentPage }">${emp.ename }</a>
+					<a href="/detailEmp?empno=${emp.empno }&currentPage=1">${emp.ename }</a>
 				</td>				
 				<td>${emp.job }</td>
 				<td>${emp.sal }</td>			
@@ -52,15 +45,15 @@
 		</table>
 		
 		<c:if test="${page.startPage > page.pageBlock }">
-			<a href="/listEmp?currentPage=${page.startPage - page.pageBlock }">[Previous]</a>
+			<a href="/listSearch?currentPage=${page.startPage - page.pageBlock }&search=${emp.search }&keyword=${emp.keyword}">[Previous]</a>
 		</c:if>
 		
 		<c:forEach var="i" begin="${page.startPage }" end="${page.endPage}">
-			<a href="/listEmp?currentPage=${i }">[${i }]</a>
+			<a href="/listSearch?currentPage=${i }&search=${emp.search }&keyword=${emp.keyword}">[${i }]</a>
 		</c:forEach>
 		
 		<c:if test="${page.startPage < page.pageBlock }">
-			<a href="/listEmp?currentPage=${page.startPage + page.pageBlock }">[Next]</a>
+			<a href="/listSearch?currentPage=${page.startPage + page.pageBlock }&search=${emp.search }&keyword=${emp.keyword}">[Next]</a>
 		</c:if>
 				
 	</body>

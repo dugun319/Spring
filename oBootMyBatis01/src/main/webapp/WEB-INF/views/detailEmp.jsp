@@ -54,7 +54,7 @@
 				<td colspan="5">
 					<input type="button" value="LIST"	onclick="location.href='/listEmp'"/> &nbsp;
 					<input type="button" value="MODIFY"	onclick="location.href='/updateFormEmp?empno=${detailEmp.empno }'"/> &nbsp; 
-					<input type="button" value="DELETE"	onclick="location.href='/deleteEmp?empno=${detailEmp.empno }'"/> 					
+					<input type="button" value="DELETE"	onclick="location.href='/deleteEmp?empno=${detailEmp.empno }&currentPage=${currentPage }'"/> 					
 				</td>
 			</tr>	
 								

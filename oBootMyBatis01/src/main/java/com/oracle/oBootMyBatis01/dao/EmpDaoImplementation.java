@@ -83,4 +83,88 @@ public class EmpDaoImplementation implements EmpDao{
 		return updateCnt;
 	}
 
+	@Override
+	public int deleteEmp(int empno) {
+		int deleteCnt;
+		System.out.println("EmpDaoImplementation deleteEmp() is started");
+		
+		try {
+			deleteCnt = session.delete("com.oracle.oBootMyBatis01.EmpMapper.EmpDelete", empno);
+		} catch (Exception e) {
+			System.out.println("EmpDaoImplementation deleteEmp() e.getMessage() -> " + e.getMessage());
+			deleteCnt = 0;
+		}		
+		
+		return deleteCnt;
+	}
+
+	@Override
+	public List<Emp> listManager() {
+		List<Emp> empMgrList = null;
+		System.out.println("EmpDaoImplementation listManager() is started");
+		
+		try {
+			empMgrList = session.selectList("com.oracle.oBootMyBatis01.EmpMapper.SelectManger");
+		} catch (Exception e) {
+			System.out.println("EmpDaoImplementation listManager() e.getMessage() -> " + e.getMessage());
+			//mgrListCnt = 0;
+		}		
+		
+		return empMgrList;
+	}
+
+	@Override
+	public int insertEmp(Emp emp) {
+		int insertResult;
+		
+		System.out.println("EmpDaoImplementation insertEmp() is started");
+		
+		try {
+			insertResult = session.insert("com.oracle.oBootMyBatis01.EmpMapper.InsertEmp", emp);
+		} catch (Exception e) {
+			System.out.println("EmpDaoImplementation insertEmp(Emp emp) e.getMessage() -> " + e.getMessage());
+			insertResult = 0;
+		}
+		
+		
+		return insertResult;
+	}
+
+	@Override
+	public int condTotalEmp(Emp emp) {
+		
+		System.out.println("EmpDaoImplementation condTotalEmp() is started");
+		int totalEmp;
+		
+		try {
+			
+			totalEmp = session.selectOne("com.oracle.oBootMyBatis01.EmpMapper.CondEmpTotal", emp);
+				
+			} catch (Exception e) {
+				System.out.println("EmpDaoImplementation condTotalEmp(Emp emp) e.getMessage() -> " + e.getMessage());
+				totalEmp = 0;
+			}
+	
+		
+		return totalEmp;
+	}
+
+	@Override
+	public List<Emp> searchEmpList(Emp emp) {
+		List<Emp> searchEmpList = null;
+		System.out.println("EmpDaoImplementation searchEmpList() is started");
+		System.err.println("EmpDaoImplementation searchEmpList() emp.getSearch() ->" + emp.getSearch());
+		System.err.println("EmpDaoImplementation searchEmpList() emp.getKeyword() ->" + emp.getKeyword());		
+		try {
+			//										MAP_ID										PARAMETER
+			searchEmpList = session.selectList("com.oracle.oBootMyBatis01.EmpMapper.SearchEmpList", emp);
+			System.out.println("EmpDaoImplementation searchEmpList() searchEmpList.size() -> " + searchEmpList.size());
+			
+		} catch (Exception e) {
+			System.out.println("EmpDaoImplementation searchEmpList() e.getMessage() -> " + e.getMessage());
+		}
+		
+		return searchEmpList;
+	}
+
 }
