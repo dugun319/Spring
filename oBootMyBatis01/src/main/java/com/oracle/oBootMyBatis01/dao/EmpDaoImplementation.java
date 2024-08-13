@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.oBootMyBatis01.model.Emp;
+import com.oracle.oBootMyBatis01.model.EmpDept;
 
 import lombok.RequiredArgsConstructor;
 
@@ -165,6 +166,24 @@ public class EmpDaoImplementation implements EmpDao{
 		}
 		
 		return searchEmpList;
+	}
+
+	@Override
+	public List<EmpDept> listEmpDept() {
+		
+		List<EmpDept> listEmpDept = null;
+		
+		try {
+			//										MAP_ID										
+			listEmpDept = session.selectList("com.oracle.oBootMyBatis01.EmpDeptMapper.listEmpDept_LOJ");
+			System.out.println("EmpDaoImplementation listEmpDept() listEmpDept.size() -> " + listEmpDept.size());
+			
+		} catch (Exception e) {
+			System.out.println("EmpDaoImplementation listEmpDept() e.getMessage() -> " + e.getMessage());
+		}
+		
+		
+		return listEmpDept;
 	}
 
 }

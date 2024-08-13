@@ -1,5 +1,6 @@
 package com.oracle.oBootMyBatis01.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -7,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.oracle.oBootMyBatis01.dao.DeptDao;
 import com.oracle.oBootMyBatis01.dao.EmpDao;
 import com.oracle.oBootMyBatis01.model.Dept;
+import com.oracle.oBootMyBatis01.model.DeptVO;
 import com.oracle.oBootMyBatis01.model.Emp;
+import com.oracle.oBootMyBatis01.model.EmpDept;
 
 import lombok.RequiredArgsConstructor;
 
@@ -113,6 +116,37 @@ public class EmpServiceImplementation implements EmpService {
 		System.out.println("EmpServiceImplementation searchEmpList.size() -> " + searchEmpList.size());
 
 		return searchEmpList;
+	}
+
+	@Override
+	public List<EmpDept> listEmpDept() {
+		
+		List<EmpDept> listEmpDept = empDao.listEmpDept();
+		System.out.println("EmpServiceImplementation listEmpDept() listEmpDept.size() -> " + listEmpDept.size());
+
+		
+		return listEmpDept;
+	}
+
+	@Override
+	public void insertDept(DeptVO deptVO) {
+		System.out.println("EmpServiceImplementation insertDept() is started");
+		deptDao.insertDept(deptVO);
+		
+	}
+
+	@Override
+	public void selectListDept(HashMap<String, Object> map) {
+		System.out.println("EmpServiceImplementation selectListDept() is started");
+		deptDao.selectListDept(map);		
+	}
+
+	@Override
+	public Dept detailDept(int deptno) {
+		System.out.println("EmpServiceImplementation detailDept() is started");		
+		Dept detailDept = deptDao.detailDept(deptno);
+		
+		return detailDept;
 	}
 	
 

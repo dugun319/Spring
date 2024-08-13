@@ -21,6 +21,18 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
       
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dugun319@gmail.com
+    password: eybu xtms tyrk tlto
+    properties:
+      mail:
+        smtp:
+          auth: true      
+          starttls:
+            enable: true
+
 #MyBatis
 mybatis:
   config-location: classpath:configuration.xml

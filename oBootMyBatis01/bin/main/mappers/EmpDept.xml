@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.oBootMyBatis01.EmpDeptMapper">
+
+	
+	<select id="listEmpDept_ROJ" 	resultType="EmpDept">
+		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
+		    FROM emp e 
+		    RIGHT OUTER JOIN dept d
+		    ON e.deptno = d.deptno
+		    ORDER BY e.empno DESC
+	</select>
+	
+	
+	
+	<select id="listEmpDept_LOJ" 	resultType="EmpDept">
+		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
+		    FROM emp e 
+		    LEFT OUTER JOIN dept d
+		    ON e.deptno = d.deptno
+		    ORDER BY e.empno DESC
+	</select>
+	
+	
+	
+	<select id="listEmpDept_FOJ" 	resultType="EmpDept">
+		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
+		    FROM emp e 
+		    FULL OUTER JOIN dept d
+		    ON e.deptno = d.deptno
+		    ORDER BY e.empno DESC
+	</select>
+	
+	
+	
+	<select id="listEmpDept_IJ" 	resultType="EmpDept">
+		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
+		    FROM emp e 
+		    INNER JOIN dept d
+		    ON e.deptno = d.deptno
+		    ORDER BY e.empno DESC
+	</select>
+	
+	
+</mapper> 

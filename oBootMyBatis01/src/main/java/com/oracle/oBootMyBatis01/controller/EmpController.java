@@ -1,7 +1,10 @@
 package com.oracle.oBootMyBatis01.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,16 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.oracle.oBootMyBatis01.model.Dept;
+import com.oracle.oBootMyBatis01.model.DeptVO;
 import com.oracle.oBootMyBatis01.model.Emp;
+import com.oracle.oBootMyBatis01.model.EmpDept;
 import com.oracle.oBootMyBatis01.service.EmpService;
 import com.oracle.oBootMyBatis01.service.Paging;
 
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Controller
@@ -31,6 +35,7 @@ public class EmpController {
 	
 	private final EmpService empService;	
 	private static String broker_currentPage = "1";
+	private final JavaMailSender javaMailSender;
 	
 	
 	@RequestMapping(value = {"listEmpStart", "listEmp"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -265,6 +270,134 @@ public class EmpController {
 		model.addAttribute("page", paging);
 		
 		return "listSearch";
+	}
+	
+	@GetMapping(value = "/listEmpDept")
+	public String listEmpDeptname(Model model) {
+		log.info("EmpController listEmpDept() is started");
+		
+		List<EmpDept> listEmpDept = empService.listEmpDept();
+		model.addAttribute("listEmpDept", listEmpDept);
+		
+		return "listEmpDept";
+	}
+	
+	@RequestMapping(value = "/mailTransport", method = {RequestMethod.GET, RequestMethod.POST})
+	public String mailTransport(HttpServletRequest httpServletRequest, Model model) {
+		
+		log.info("EmpController mailTransport() is started");
+		
+		String toMail = "dugun319@naver.com";
+		String setFrom = "dugun319@gmail.com";
+		String title = "EmpController mailTransport()";
+		
+		System.out.println("EmpController mailTransport() toMail ->" + toMail);
+		
+		try {
+			// MIME (Multi-purpose Internet Mail Extensions) 전자우편 Internet 표준 Format
+			MimeMessage message 			= javaMailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			messageHelper.setFrom(setFrom);
+			messageHelper.setTo(toMail);
+			messageHelper.setSubject(title);
+			
+			String tempPassword = (int)(Math.random() * 999999) + 1 + "";
+			messageHelper.setText("Temporal Password : " + tempPassword);
+			System.out.println("EmpController mailTransport() tempPassword ->" + tempPassword);
+			
+			javaMailSender.send(message);
+			model.addAttribute("check", 1);
+			
+			//DB LOGIC
+			
+		} catch (Exception e) {
+			System.out.println("EmpController mailTransport() e.getMessage() ->" + e.getMessage());
+			model.addAttribute("check", 2);
+		}	
+		
+		return "mailResult";
+	}
+	
+	
+	@RequestMapping(value = "/writeDeptIn", method = {RequestMethod.GET, RequestMethod.POST})
+	public String writeDeptIn(Model model) {
+		log.info("EmpController writeDeptIn() is started");		
+		if(model.getAttribute("flag") != null) {
+			System.out.println("EmpController writeDeptIn() flag ");
+		}
+		return "writeDept";
+	}
+	
+
+	@RequestMapping(value = "/writeDept", method = {RequestMethod.GET, RequestMethod.POST})
+	public String writeDept(DeptVO deptVO, Model model) {
+		
+		log.info("EmpController writeDept() is started");
+		
+		empService.insertDept(deptVO);
+		
+		if(deptVO == null) {
+			System.out.println("EmpController writeDept() deptVO is NULL");
+		} else {
+			System.out.println("EmpController writeDept() deptVO.getOdeptno() -> " + deptVO.getOdeptno());
+			System.out.println("EmpController writeDept() deptVO.getOdname() -> " + deptVO.getOdname());
+			System.out.println("EmpController writeDept() deptVO.getOloc() -> " + deptVO.getOloc());
+			
+			model.addAttribute("msg", "Input is Completed");
+			model.addAttribute("dept", deptVO);
+			
+			List<Dept> deptList = empService.deptSelect();
+			model.addAttribute("deptList", deptList);
+		}
+		
+		return "writeDept";
+	}
+		
+	
+	@RequestMapping(value = "/confirmDeptno", method = {RequestMethod.GET, RequestMethod.POST})
+	public String confirmEmpno(Dept raw_dept, Model model) {
+		log.info("EmpController confirmEmpno() is started");
+		int flag;
+		Dept dept = empService.detailDept(raw_dept.getDeptno());
+		model.addAttribute("deptno", raw_dept.getDeptno());
+		
+		if(dept != null) {
+			System.out.println("EmpController confirm() 중복된 부서번호입니다");
+			model.addAttribute("msg", "중복된 부서번호입니다");
+			flag = 0;
+		} else {
+			System.out.println("EmpController confirm() 사용가능 부서번호입니다");
+			model.addAttribute("msg", "사용가능한 부서번호입니다");
+			flag = 1;
+		}
+		
+		return "redirect:writeDeptIn?flag="+flag;
+	}
+	
+	
+	
+	@GetMapping(value = "/writeDeptCursor")
+	public String writeDeptCursor(Model model) {
+		
+		log.info("EmpController writeDeptCursor() is started");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("sDeptno", 10);
+		map.put("eDeptno", 100);
+		
+		empService.selectListDept(map);
+		
+		// resultMap은 DB 컬럼명과 DTO 변수 명이 다를 때 사용한다.
+		List<Dept> deptList = (List<Dept>) map.get("dept");
+		
+		for(Dept dept : deptList) {
+			System.out.println("EmpController writeDeptCursor() dept-> " + dept);
+		}
+		
+		System.out.println("EmpController writeDeptCursor() deptList.size()" + deptList.size());
+		model.addAttribute("deptList", deptList);
+		
+		return "writeDeptCursor";
 	}
 	
 }
