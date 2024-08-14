@@ -21,13 +21,14 @@
 	<body>
 	
 	 <h2>부서정보 입력</h2>
-	 <c:if test="${msg!=null}">${msg}</c:if>
+	 
 		<form action="writeDept" method="post" name="frm">
 			<table>
 				<tr>
 					<th>부서번호</th>
 					<td><input type="number" name="deptno"	required="required" maxlength="2"/>
-						<input type="button" value="중복확인" onclick="chk()"/> 
+						<input type="button" value="중복확인" onclick="chk()"/>&nbsp; &nbsp;
+						<c:if test="${msg!=null}">${msg}</c:if>
 					</td>
 				</tr>
 				
@@ -40,9 +41,9 @@
 				<input type="submit" value="확인"></td></tr>
 				
 			</table>
-			입력된 부서번호 :<c:if test="${dept.odeptno!=null}">${dept.odeptno}</c:if><p>
-		         입력된 부서명   :<c:if test="${dept.odname!=null}">${dept.odname}</c:if><p> 
-		         입력된 부서위치 :<c:if test="${dept.oloc!=null}">${dept.oloc}</c:if><p> 
+			입력된 부서번호 :<c:if test="${deptvo.odeptno!=null}">${deptvo.odeptno}</c:if><p>
+		         입력된 부서명   :<c:if test="${deptvo.odname!=null}">${deptvo.odname}</c:if><p> 
+		         입력된 부서위치 :<c:if test="${deptvo.oloc!=null}">${deptvo.oloc}</c:if><p> 
 		        <%-- ${deptVO.Oloc} --%>
 		        
 		   <h2>부서 정보 List</h2>

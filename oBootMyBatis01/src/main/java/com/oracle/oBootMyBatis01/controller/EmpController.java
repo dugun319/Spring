@@ -3,6 +3,7 @@ package com.oracle.oBootMyBatis01.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import com.oracle.oBootMyBatis01.model.Dept;
 import com.oracle.oBootMyBatis01.model.DeptVO;
 import com.oracle.oBootMyBatis01.model.Emp;
 import com.oracle.oBootMyBatis01.model.EmpDept;
+import com.oracle.oBootMyBatis01.model.MemberTwo;
 import com.oracle.oBootMyBatis01.service.EmpService;
 import com.oracle.oBootMyBatis01.service.Paging;
 
@@ -321,10 +323,8 @@ public class EmpController {
 	
 	@RequestMapping(value = "/writeDeptIn", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writeDeptIn(Model model) {
-		log.info("EmpController writeDeptIn() is started");		
-		if(model.getAttribute("flag") != null) {
-			System.out.println("EmpController writeDeptIn() flag ");
-		}
+		log.info("EmpController writeDeptIn() is started");	
+		
 		return "writeDept";
 	}
 	
@@ -344,7 +344,7 @@ public class EmpController {
 			System.out.println("EmpController writeDept() deptVO.getOloc() -> " + deptVO.getOloc());
 			
 			model.addAttribute("msg", "Input is Completed");
-			model.addAttribute("dept", deptVO);
+			model.addAttribute("deptvo", deptVO);
 			
 			List<Dept> deptList = empService.deptSelect();
 			model.addAttribute("deptList", deptList);
@@ -355,23 +355,19 @@ public class EmpController {
 		
 	
 	@RequestMapping(value = "/confirmDeptno", method = {RequestMethod.GET, RequestMethod.POST})
-	public String confirmEmpno(Dept raw_dept, Model model) {
+	public String confirmDeptno(Dept raw_dept, Model model) {
 		log.info("EmpController confirmEmpno() is started");
-		int flag;
 		Dept dept = empService.detailDept(raw_dept.getDeptno());
-		model.addAttribute("deptno", raw_dept.getDeptno());
 		
 		if(dept != null) {
 			System.out.println("EmpController confirm() 중복된 부서번호입니다");
 			model.addAttribute("msg", "중복된 부서번호입니다");
-			flag = 0;
 		} else {
 			System.out.println("EmpController confirm() 사용가능 부서번호입니다");
 			model.addAttribute("msg", "사용가능한 부서번호입니다");
-			flag = 1;
 		}
 		
-		return "redirect:writeDeptIn?flag="+flag;
+		return "forward:writeDeptIn";
 	}
 	
 	
@@ -388,6 +384,7 @@ public class EmpController {
 		empService.selectListDept(map);
 		
 		// resultMap은 DB 컬럼명과 DTO 변수 명이 다를 때 사용한다.
+		@SuppressWarnings("unchecked")
 		List<Dept> deptList = (List<Dept>) map.get("dept");
 		
 		for(Dept dept : deptList) {
@@ -398,6 +395,82 @@ public class EmpController {
 		model.addAttribute("deptList", deptList);
 		
 		return "writeDeptCursor";
+	}
+	
+	// interCeptor 시작 화면 
+	@GetMapping(value = "/interceptorForm") 
+	public String interceptorForm(Model model) {
+		log.info("EmpController interceptorForm() is started");
+	    return "interceptorForm";
+	}
+	
+	/*
+	// 2.interceptor Number 2
+	@RequestMapping(value="/interCeptor")
+	public String interCeptor(Member1 member1, Model model) {
+		System.out.println("EmpController  interCeptor  Test Start");
+		System.out.println("EmpController  interCeptor id->"+member1.getId());
+		// 존재 : 1  , 비존재 : 0
+		int memCnt = es.memCount(member1.getId()); 
+		
+		System.out.println("EmpController interCeptor memCnt ->"+ memCnt);
+
+		model.addAttribute("id",member1.getId());
+		model.addAttribute("memCnt",memCnt);
+		System.out.println("interCeptor  Test End");
+	
+		return "interCeptor";   // User 존재하면  User 이용 조회 Page
+	}
+	*/
+	
+	// interceptor #2
+	@GetMapping(value = "/interceptor")
+	public String interceptor(MemberTwo memberTwo, Model model) {
+		log.info("EmpController interceptor() is started");
+		System.out.println("EmpController interceptor() memberTwo.getId() -> " + memberTwo.getId());
+		
+		int memCnt = empService.memCount(memberTwo.getId());
+		
+		model.addAttribute("id", memberTwo.getId());
+		model.addAttribute("memCnt", memCnt);
+		System.out.println("interceptor test is COMPLETED");
+		
+		return "interceptor";
+	}
+	
+	
+	@GetMapping(value = "/doMemberWrite")
+	public String doMemberWrite(Model model, HttpServletRequest request) {
+		
+		log.info("EmpController doMemberWrite() is started");
+		
+		String ID = (String) request.getSession().getAttribute("ID");
+		System.out.println("EmpController doMemberWrite() DO FIRST");
+		model.addAttribute("id", ID);
+		model.addAttribute("message", "CREATE MEMBER FIRST!!!");
+		
+		return "doMemberWrite";
+	}
+	
+	
+	@GetMapping(value = "/doMemberList")
+	public String doMemberList(Model model, HttpServletRequest request) {
+		
+		log.info("EmpController doMemberList() is started");
+		
+		String ID = (String) request.getSession().getAttribute("ID");
+		System.out.println("doMemberList ID -> " + ID);
+		
+		MemberTwo memberTwo = null;
+		
+		List<MemberTwo> listMember = empService.listMember(memberTwo);
+		
+		System.out.println("doMemberList LINE 466 -> " + listMember);
+		model.addAttribute("ID", ID);
+		System.out.println("doMemberList LINE 468 ID -> " + ID);
+		model.addAttribute("listMember", listMember);
+		
+		return "doMemberList";
 	}
 	
 }

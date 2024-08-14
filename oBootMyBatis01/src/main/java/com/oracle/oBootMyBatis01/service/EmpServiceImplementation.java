@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.oracle.oBootMyBatis01.dao.DeptDao;
 import com.oracle.oBootMyBatis01.dao.EmpDao;
+import com.oracle.oBootMyBatis01.dao.MemberTwoDao;
 import com.oracle.oBootMyBatis01.model.Dept;
 import com.oracle.oBootMyBatis01.model.DeptVO;
 import com.oracle.oBootMyBatis01.model.Emp;
 import com.oracle.oBootMyBatis01.model.EmpDept;
+import com.oracle.oBootMyBatis01.model.MemberTwo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +24,7 @@ public class EmpServiceImplementation implements EmpService {
 	// 각각의 Interface를 상속받는 다수의 DAO 선언은 가능함(갯수무관) 
 	private final EmpDao empDao;
 	private final DeptDao deptDao;
+	private final MemberTwoDao memberTwoDao;
 	
 	@Override
 	public int totalEmp() {
@@ -147,6 +150,21 @@ public class EmpServiceImplementation implements EmpService {
 		Dept detailDept = deptDao.detailDept(deptno);
 		
 		return detailDept;
+	}
+
+	@Override
+	public int memCount(String id) {
+		int memCount = memberTwoDao.memCount(id);
+		System.out.println("EmpServiceImplementation memCount() memCount -> " + memCount);
+		return memCount;
+	}
+
+	@Override
+	public List<MemberTwo> listMember(MemberTwo memberTwo) {
+		
+		List<MemberTwo> listMember = memberTwoDao.listMember(memberTwo);
+		System.out.println("EmpServiceImplementation listMember() listMember.size() -> " + listMember.size());
+		return listMember;
 	}
 	
 

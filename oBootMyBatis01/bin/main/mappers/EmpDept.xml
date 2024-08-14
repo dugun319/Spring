@@ -5,7 +5,7 @@
 <mapper namespace="com.oracle.oBootMyBatis01.EmpDeptMapper">
 
 	
-	<select id="listEmpDept_ROJ" 	resultType="EmpDept">
+	<select id="listEmpDept_ANSI_ROJ" 	resultType="EmpDept">
 		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
 		    FROM emp e 
 		    RIGHT OUTER JOIN dept d
@@ -15,11 +15,29 @@
 	
 	
 	
-	<select id="listEmpDept_LOJ" 	resultType="EmpDept">
+	<select id="listEmpDept_ROJ" 	resultType="EmpDept">
+		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
+		    FROM emp e, dept d
+		    WHERE e.deptno(+) = d.deptno
+		    ORDER BY e.empno DESC
+	</select>
+	
+	
+	
+	<select id="listEmpDept_ANSI_LOJ" 	resultType="EmpDept">
 		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
 		    FROM emp e 
 		    LEFT OUTER JOIN dept d
 		    ON e.deptno = d.deptno
+		    ORDER BY e.empno DESC
+	</select>
+	
+	
+	
+	<select id="listEmpDept_LOJ" 	resultType="EmpDept">
+		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
+		    FROM emp e, dept d
+		    WHERE e.deptno = d.deptno(+)
 		    ORDER BY e.empno DESC
 	</select>
 	
@@ -35,11 +53,20 @@
 	
 	
 	
-	<select id="listEmpDept_IJ" 	resultType="EmpDept">
+	<select id="listEmpDept_ANSI_IJ" 	resultType="EmpDept">
 		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
 		    FROM emp e 
 		    INNER JOIN dept d
 		    ON e.deptno = d.deptno
+		    ORDER BY e.empno DESC
+	</select>
+	
+	
+	
+	<select id="listEmpDept_IJ" 	resultType="EmpDept">
+		SELECT e.empno, e.ename, e.job, d.deptno, d.loc 
+		    FROM emp e, dept d 
+		    WHERE e.deptno = d.deptno
 		    ORDER BY e.empno DESC
 	</select>
 	
