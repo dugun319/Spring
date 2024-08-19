@@ -2,8 +2,8 @@ package com.oracle.oBootMyBatis01.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -12,8 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.oBootMyBatis01.model.Dept;
 import com.oracle.oBootMyBatis01.model.DeptVO;
@@ -471,6 +473,54 @@ public class EmpController {
 		model.addAttribute("listMember", listMember);
 		
 		return "doMemberList";
+	}
+	
+	@GetMapping(value = "/ajaxForm")
+	public String ajaxForm(Model model) {
+		log.info("EmpController ajaxForm() is started");		
+		return "ajaxForm";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/getDeptName")
+	public String getDeptName(Dept dept, Model model) {
+		log.info("EmpController getDeptName() is started");
+		
+		System.err.println("EmpController getDeptName() dept.getDeptno() -> " + dept.getDeptno());
+		String deptName = empService.deptName(dept.getDeptno());		
+		
+		return deptName;
+	}
+	
+	
+	@GetMapping(value = "/listEmpAjaxForm1")
+	public String listEmpAjaxForm1(Model model) {
+		log.info("EmpController listEmpAjaxForm1() is started");
+		Emp emp = new Emp();
+		
+		emp.setStart(1);
+		emp.setEnd(10);
+		
+		List<Emp> listEmp = empService.listEmp(emp);
+		
+		System.out.println("EmpController listEmpAjaxForm1() listEmp.size() -> " + listEmp.size());
+		model.addAttribute("result", "result Ajax");
+		model.addAttribute("listEmp", listEmp);
+		
+		return "listEmpAjaxForm";		
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/empSerializeWrite")
+	public Map<String, Object> empSerializeWrite(@RequestBody @Valid Emp emp){
+		log.info("EmpController empSerializeWrite() is started");
+		System.out.println("EmpController empSerializeWrite() emp -> " + emp);
+		int writeResult = 1;
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("writeResult", writeResult);
+		
+		return resultMap;
 	}
 	
 }

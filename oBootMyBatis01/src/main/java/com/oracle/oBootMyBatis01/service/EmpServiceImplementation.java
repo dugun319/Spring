@@ -166,6 +166,14 @@ public class EmpServiceImplementation implements EmpService {
 		System.out.println("EmpServiceImplementation listMember() listMember.size() -> " + listMember.size());
 		return listMember;
 	}
+
+	@Override
+	public String deptName(int deptno) {
+		String deptName = empDao.deptName(deptno);		
+		System.out.println("EmpServiceImplementation deptName() deptName -> " + deptName);
+		
+		return deptName;
+	}
 	
 
 }

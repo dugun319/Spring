@@ -186,4 +186,17 @@ public class EmpDaoImplementation implements EmpDao{
 		return listEmpDept;
 	}
 
+	@Override
+	public String deptName(int deptno) {
+		String deptName = "";
+		
+		try {
+			deptName = session.selectOne("com.oracle.oBootMyBatis01.DeptMapper.GetDeptName", deptno);
+		} catch (Exception e) {
+			System.out.println("EmpDaoImplementation deptName() e.getMessage() -> " + e.getMessage());
+		}
+						
+		return deptName;
+	}
+
 }

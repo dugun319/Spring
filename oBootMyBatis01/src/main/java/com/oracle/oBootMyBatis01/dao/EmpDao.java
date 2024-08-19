@@ -18,5 +18,5 @@ public interface EmpDao {
 	int 			condTotalEmp(Emp emp);
 	List<Emp> 		searchEmpList(Emp emp);
 	List<EmpDept> 	listEmpDept();
-	
+	String 			deptName(int deptno);	
 }

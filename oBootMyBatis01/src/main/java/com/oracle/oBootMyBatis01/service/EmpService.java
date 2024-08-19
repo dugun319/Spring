@@ -25,5 +25,7 @@ public interface EmpService {
 	void 			selectListDept(HashMap<String, Object> map);
 	Dept 			detailDept(int deptno);
 	int 			memCount(String id);
-	List<MemberTwo> listMember(MemberTwo memberTwo);		
+	List<MemberTwo> listMember(MemberTwo memberTwo);
+	String 			deptName(int deptno);		
+	
 }

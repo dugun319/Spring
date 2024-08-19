@@ -38,7 +38,7 @@
 	
 	
 	
-	<select id="ProcDeptList"	parameterType="java.util.Map" statementType="CALLABLE">
+	<select id="ProcDeptList"		parameterType="java.util.Map" statementType="CALLABLE">
 		{
 			CALL dept_cursor3(
 				#{sDeptno		, mode=IN, 	jdbcType=INTEGER},
@@ -51,11 +51,11 @@
 		}
 	</select>
 	
+		
 	
 	
 	
-	
-	<select id="DetailDept"		parameterType="int" 	resultType="Dept">
+	<select id="DetailDept"			parameterType="int" 	resultType="Dept">
 		SELECT 	deptno,
 				dname,
 				loc
@@ -63,6 +63,15 @@
 			WHERE deptno = ${deptno}	
 	</select>
 	
+	
+	
+	
+	
+	<select id="GetDeptName"		parameterType="int" 	resultType="java.lang.String">
+		SELECT 	dname
+			FROM dept
+			WHERE deptno = ${deptno}	
+	</select>
 	
 	
 </mapper> 
