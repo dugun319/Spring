@@ -1,9 +1,10 @@
 @charset "utf-8";
 
 
-	tr { height: 30px; 
+	tr { 
+		padding: 10px;
 		background: aliceblue;		
-		}
+	}
 
 	body{
 		background-color: lightskyblue;
@@ -35,12 +36,14 @@
 	}
 	
 	input{
-		width: 200px;
-		height: 30px;
+		width: 150px;
+		height: 25px;
 	}
 	
 	div {
+		font-family: consolas;
 		text-align: center;
+		font-size: 15px;
 	}
 
 	caption {

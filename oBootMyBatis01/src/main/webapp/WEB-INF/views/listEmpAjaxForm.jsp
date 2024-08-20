@@ -17,6 +17,7 @@
 					// empController의 getDeptName 호출
 					url: "<%=request.getContextPath()%>/getDeptName",
 					data: {deptno: pDeptno},
+					//data: {deptno: pDeptno, dname: pDname },
 					dataType: 'text',
 					success: function(deptName){
 						// id = deptName value 담기
@@ -88,10 +89,9 @@
 		obj = {};
 		
 		if(sendData2){
-			jQuery.each(sendData2, function(){
+			$.each(sendData2, function(){
 				obj[this.name] = this.value;
-				//alert("this.name -> " + this.name);
-				alert("this.value -> " + this.value);
+				alert("this.name -> " + this.name + "  this.value -> " + this.value);
 			}
 					
 			);

@@ -26,6 +26,6 @@ public interface EmpService {
 	Dept 			detailDept(int deptno);
 	int 			memCount(String id);
 	List<MemberTwo> listMember(MemberTwo memberTwo);
-	String 			deptName(int deptno);		
-	
+	String 			deptName(int deptno);
+	int 			transactionInsertUpdate();			
 }

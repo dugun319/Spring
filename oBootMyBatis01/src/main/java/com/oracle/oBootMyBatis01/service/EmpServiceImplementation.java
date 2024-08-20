@@ -174,6 +174,14 @@ public class EmpServiceImplementation implements EmpService {
 		
 		return deptName;
 	}
+
+	@Override
+	public int transactionInsertUpdate() {
+		System.out.println("EmpServiceImplementation transactionInsertUpdate() is started ");
+		
+		//return memberTwoDao.transactionInsertUpdate1(); transaction X
+		return memberTwoDao.transactionInsertUpdate2();
+	}
 	
 
 }

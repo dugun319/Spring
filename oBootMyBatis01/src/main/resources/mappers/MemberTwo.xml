@@ -16,4 +16,12 @@
 			ORDER BY id DESC	
 	</select>
 	
+	
+	
+	<insert id="insertMemberTwo" parameterType="MemberTwo">
+		INSERT INTO member2(id, password, name, reg_date )
+			VALUES(#{id}, #{password}, #{name, jdbcType=VARCHAR}, sysdate)
+	
+	</insert>
+	
 </mapper>

@@ -523,4 +523,64 @@ public class EmpController {
 		return resultMap;
 	}
 	
+	@GetMapping(value = "/listEmpAjaxForm2")
+	public String listEmpAjaxForm2(Model model) {
+		log.info("EmpController listEmpAjaxForm2() is started");
+		
+		Emp emp = new Emp();
+		emp.setStart(1);
+		emp.setEnd(10);
+		
+		List<Emp> listEmp = empService.listEmp(emp);
+		model.addAttribute("listEmp", listEmp);
+		System.out.println("EmpController listEmpAjaxForm2() listEmp.size() -> " + listEmp.size());
+		
+		return "listEmpAjaxForm2";
+	}
+	
+	
+	@GetMapping(value = "/listEmpAjaxForm3")
+	public String listEmpAjaxForm3(Model model) {
+		log.info("EmpController listEmpAjaxForm3() is started");
+		
+		Emp emp = new Emp();
+		emp.setStart(1);
+		emp.setEnd(10);
+		
+		List<Emp> listEmp = empService.listEmp(emp);
+		model.addAttribute("listEmp", listEmp);
+		System.out.println("EmpController listEmpAjaxForm3() listEmp.size() -> " + listEmp.size());
+		
+		return "listEmpAjaxForm3";
+	}
+
+	@ResponseBody
+	@PostMapping(value = "/empListUpdate")
+	public Map<String, Object> empListUpdate(@RequestBody @Valid List<Emp> listEmp){
+		log.info("EmpController empListUpdate() is started");
+		Map<String, Object> resultMap = new HashMap<>();
+		int updateResult = 1;
+		
+		for(Emp emp : listEmp) {
+			System.out.println("EmpController empListUpdate() emp -> " + emp);
+			//int updateResult = empService.updateEmp(emp);
+		}
+		
+		resultMap.put("updateResult", updateResult);
+		
+		return resultMap;
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/transactionInsertUpdate")
+	public String transactionInsertUpdate() {
+		log.info("EmpController transactionInsertUpdate() is started");
+		
+		int rtnMember = empService.transactionInsertUpdate();
+		System.out.println("EmpController transactionInsertUpdate() rtnMember -> " + rtnMember);
+		String rtnMemberStr = String.valueOf(rtnMember);
+		
+		return rtnMemberStr;		
+	}
+	
 }

@@ -1,11 +1,14 @@
 package com.oracle.oBootMyBatis01.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oracle.oBootMyBatis01.model.Dept;
+import com.oracle.oBootMyBatis01.model.Emp;
 import com.oracle.oBootMyBatis01.model.SampleVO;
 import com.oracle.oBootMyBatis01.service.EmpService;
 
@@ -50,5 +53,25 @@ public class EmpRestController {
 		List<Dept> deptList = empService.deptSelect();
 		
 		return deptList;
+	}
+	
+	
+	@GetMapping(value = "/empnoDelete")
+	public Map<String, Object> empnoDelete(Emp emp) {
+		
+		log.info("EmpController empnoDelete() is started");
+		System.out.println("EmpController empnoDelete() emp -> " + emp);
+				
+		int deleteResult = empService.deleteEmp(emp.getEmpno());		
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("deleteResult", deleteResult);		
+		return resultMap;		
+		
+		/*
+		System.out.println("EmpController empnoDelete() deleteResult -> " + deleteResult);
+		String strDeleteResult = Integer.toString(deleteResult);		
+		return strDeleteResult;
+		*/
 	}
 }
