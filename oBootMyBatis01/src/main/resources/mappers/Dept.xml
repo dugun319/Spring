@@ -60,7 +60,7 @@
 				dname,
 				loc
 			FROM dept
-			WHERE deptno = ${deptno}	
+			WHERE deptno = #{deptno}	
 	</select>
 	
 	
@@ -70,7 +70,7 @@
 	<select id="GetDeptName"		parameterType="int" 	resultType="java.lang.String">
 		SELECT 	dname
 			FROM dept
-			WHERE deptno = ${deptno}	
+			WHERE deptno = #{deptno}	
 	</select>
 	
 	

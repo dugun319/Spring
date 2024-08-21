@@ -25,17 +25,17 @@
 			border-left: 3px solid #FFBB00;
 			margin-bottom: 20px;
 		}
-		.chating{
+		.chatting{
 			background-color: #000;
 			width: 500px;
 			height: 500px;
 			overflow: auto;
 		}
-		.chating .me{
+		.chatting .me{
 			color: #F6F6F6;
 			text-align: right;
 		}
-		.chating .others{
+		.chatting .others{
 			color: #FFE400;
 			text-align: left;
 		}
@@ -74,7 +74,7 @@
 			console.log("wsEvt  소켓이 열리면 초기화 세팅하기..");
 		}	
 		//메시지를 받으면 동작
-       ws.onmessage = function(data) {
+       	ws.onmessage = function(data) {
 			var msg = data.data;
 			var memberSave = false;
 			alert("ws.onmessage->"+msg)
@@ -101,8 +101,7 @@
 					// session User 등록 수행
 					sendUser('Create');
 				}
-				
-				
+						
 			}else if(jsonMsg.type == "message"){
 				alert("jsonMsg.type->message");
 				// type이 message인 경우엔 채팅이 발생한 경우.
@@ -111,9 +110,9 @@
                 // 메시지이므로 오른쪽으로 정렬하는 클래스를 처리하고 메시지를 출력.     
                 // 비교하여 같지 않다면 타인이 발신한 메시지이므로 왼쪽으로 정렬하는 클래스를 처리하고 메시지를 출력
 				if(jsonMsg.sessionId == $("#sessionId").val()){
-					$("#chating").append("<p class='me'>나 :" + jsonMsg.msg + "</p>");	
+					$("#chatting").append("<p class='me'>나 :" + jsonMsg.msg + "</p>");	
 				}else{
-					$("#chating").append("<p class='others'>" + jsonMsg.userName + " :" + jsonMsg.msg + "</p>");
+					$("#chatting").append("<p class='others'>" + jsonMsg.userName + " :" + jsonMsg.msg + "</p>");
 				}
 				
 			}
@@ -220,7 +219,7 @@
 		<h1>채팅</h1>
 		<input type="hidden" id="sessionId" value="">
 		<div id="meName"></div>
-		<div id="chating" class="chating">
+		<div id="chatting" class="chatting">
 		</div>
 		<div id="member" class="member">
 		</div>

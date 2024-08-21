@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+
+	// Before Modify
 	function getEmpListUpdateTest(){
 		alert("getEmpListUpdateTest() is called");
 		
@@ -32,6 +34,7 @@
 		} 
 	}
 	
+	//After Modify
 	function getEmpListUpdate(){
 		alert("getEmpListUpdate() is called");
 		
