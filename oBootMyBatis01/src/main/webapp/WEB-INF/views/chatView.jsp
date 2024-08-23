@@ -54,7 +54,27 @@
 <script type="text/javascript">
     // web Socket
 	var ws;
-
+	
+    // Excute#01 
+	function chatName(){
+    	alert("chatName Start..");
+		var userName = $("#userName").val();
+		console.log("chatName  userName: " + userName);
+		if(userName == null || userName.trim() == ""){
+			alert("사용자 이름을 입력해주세요.");
+			$("#userName").focus();
+		}else{
+			wsOpen();
+			$("#meName").append('나의이름:'+userName); 
+			$("#yourName").hide();
+			$("#yourMsg").show();
+		//	$("#yourNameDel").show();
+		}   	
+    	
+    }
+    
+    
+	// Excute#02 
 	function wsOpen(){
 		console.log("wsOpen  location.host: " + location.host);
         var wsUri  = "ws://" + location.host + "${pageContext.request.contextPath}/chatting";
@@ -64,7 +84,9 @@
 		wsEvt();
  		
 	}
-
+	
+	
+	// Excute#03 
     function  wsEvt() {
 		console.log("wsEvt  start... ");
         alert("wsEvt  start...")    
@@ -77,7 +99,7 @@
        	ws.onmessage = function(data) {
 			var msg = data.data;
 			var memberSave = false;
-			alert("ws.onmessage->"+msg)
+			alert("ws.onmessage-> " + msg)
 			if(msg != null && msg.trim() != ''){
 				memberSave = false;
 				// JSON 오브젝트를 자바스크립트 오브젝트로 변환
@@ -156,7 +178,11 @@
 			}
 		});		
 	}
-     
+    
+	
+	
+	
+ 	// Excute#04 
     // User 등록  Message 전송       saveStatus --> Create / Delete
     function sendUser(saveStatus) {
 		var userOption ={
@@ -177,27 +203,12 @@
 			 window.open(location.href, "_self", "");
 			 window.close()
 		}
-}
+	}
     
     
 
-    function chatName(){
-    	alert("chatName Start..");
-		var userName = $("#userName").val();
-		console.log("chatName  userName: " + userName);
-		if(userName == null || userName.trim() == ""){
-			alert("사용자 이름을 입력해주세요.");
-			$("#userName").focus();
-		}else{
-			wsOpen();
-			$("#meName").append('나의이름:'+userName); 
-			$("#yourName").hide();
-			$("#yourMsg").show();
-		//	$("#yourNameDel").show();
-		}   	
-    	
-    }
-
+    
+ 	// Excute#05
 	// 전체 Message 전송 
 	function send() {
 		var option ={

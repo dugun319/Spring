@@ -12,6 +12,7 @@ import com.oracle.oBootMyBatis01.handler.SocketHandler;
 @EnableWebSocket
 public class WebSocketConfiguration implements WebSocketConfigurer {
 	
+	// Socket Server -> Controller와 유사한 기능을 수행
 	@Autowired
 	SocketHandler socketHandler;
 	
